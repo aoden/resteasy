@@ -35,10 +35,9 @@ public class CategoryService extends AbstractService<Category, CategoryDTO> {
 
     private List<CategoryDTO> toDTOList(List<Category> list, int targetLevel) {
 
-        return list.stream().map(e -> toDTO(e, (e.getLevel() < targetLevel))).collect(Collectors.toList());
+        return list.stream().map(e -> toDTO(e, (e.getLevel() <= targetLevel))).collect(Collectors.toList());
     }
 
-    @Override
     protected CategoryDTO toDTO(Category entity, boolean includeChildren) {
         return entity != null ? includeChildren ?
                 CategoryDTO.builder().
@@ -56,5 +55,10 @@ public class CategoryService extends AbstractService<Category, CategoryDTO> {
                         level(entity.getLevel()).
                         build() :
                 null;
+    }
+
+    @Override
+    protected CategoryDTO toDTO(Category entity) {
+        return toDTO(entity, true);
     }
 }

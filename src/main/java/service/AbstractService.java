@@ -10,9 +10,15 @@ import java.util.stream.Collectors;
  */
 public abstract class AbstractService<E, T> {
 
-    protected abstract T toDTO(E entity, boolean includeChildren);
+    /**
+     * Convert to dto
+     *
+     * @param entity entity to convert
+     * @return
+     */
+    protected abstract T toDTO(E entity);
     protected List<T> toDTOList(List<E> entities) {
 
-        return entities.stream().map(e -> toDTO(e, true)).collect(Collectors.toList());
+        return entities.stream().map(e -> toDTO(e)).collect(Collectors.toList());
     }
 }
